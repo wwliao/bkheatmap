@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 import bkheatmap
 
@@ -33,10 +33,9 @@ setup(name="bkheatmap",
       author="Wen-Wei Liao",
       author_email="gattacaliao@gmail.com",
       license="GPLv3",
-      packages=find_packages(),
+      py_modules=["bkheatmap"],
       install_requires=install_requires,
       entry_points={
         'console_scripts': ["bkheatmap=bkheatmap:main"],
       },
-      include_package_data=True,
       zip_safe=False)
