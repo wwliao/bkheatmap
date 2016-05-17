@@ -177,9 +177,10 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
                      min_border_top=0, min_border_bottom=0,
                      toolbar_location=None, webgl=True)
 
+    col_height = 0.09 * (df.shape[0] * width) / (df.shape[1] * height)
     if column_group:
         coldendro.multi_line(list(np.asarray(col_dendro["icoord"])/10 - 0.5),
-                           list(np.asarray(col_dendro["dcoord"]) + 0.25),
+                           list(np.asarray(col_dendro["dcoord"]) + col_height/2),
                            line_color="#a8a8a8", line_width=1)
 
         groupdict = {}
@@ -187,7 +188,7 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
         groupdict["column_group"] = column_group
         groupdf = pd.DataFrame(groupdict)
         groupdf = assign_cat_color(groupdf, "column_group", "Paired")
-        coldendro.rect("column_id", 0, width=1, height=0.5,
+        coldendro.rect("column_id", 0, width=1, height=col_height,
                      fill_color="color", line_color=None,
                      source=ColumnDataSource(data=groupdf))
     else:
@@ -258,8 +259,8 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
     colorbar.grid.grid_line_color = None
     colorbar.outline_line_color = None
 
-    output_file("{0}.bkheatmap.html".format(root),
-                title="{0} Bokeh Heatmap".format(root))
+    output_file("{0}.bkheatmap.html".format(prefix),
+                title="{0} Bokeh Heatmap".format(prefix))
     save(gridplot([[colorbar, coldendro, None],
                    [rowdendro, heatmap, rowlabel],
                    [empty, collabel, None]]))
