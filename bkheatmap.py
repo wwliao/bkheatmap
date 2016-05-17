@@ -53,8 +53,9 @@ def cluster(df, metric="euclidean", method="single", row=True, column=True):
     return df, row_linkmat, col_linkmat
 
 def assign_color(df, value_var, colormap):
-    norm = mpl.colors.Normalize(vmin=df[value_var].min(),
-                                vmax=df[value_var].max())
+    vmax = df[value_var].abs().max()
+    vmin = vmax * -1
+    norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
     df["color"] = df.apply(lambda s: mpl.colors.rgb2hex(
                            cm.get_cmap(colormap)(norm(s[value_var]))),
                            axis=1)
@@ -69,8 +70,8 @@ def assign_cat_color(df, cat_var, colormap):
     return df
 
 def get_colorbar_source(df, value_var, colormap):
-    vmin = df[value_var].min()
-    vmax = df[value_var].max()
+    vmax = df[value_var].abs().max()
+    vmin = vmax * -1
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
     value = np.linspace(vmin, vmax, num=50)
     color = []
