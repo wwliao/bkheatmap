@@ -79,10 +79,8 @@ def get_colorbar_source(df, value_var, colormap):
         color.append(mpl.colors.rgb2hex(cm.get_cmap(colormap)(norm(v))))
     return ColumnDataSource(data=dict(value=value, color=color))
 
-def bkheatmap(table, scale="row", metric="euclidean", method="single",
+def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
               width=400, height=400, palette="Spectral_r"):
-    root = os.path.splitext(os.path.basename(table))[0]
-    df = pd.read_table(table, index_col=0)
     df.index.name = "row"
     zscore = calc_zscore(df, scale=scale)
     zscore = zscore.dropna()
@@ -269,7 +267,9 @@ def bkheatmap(table, scale="row", metric="euclidean", method="single",
 def main():
     parser = get_parser()
     args = parser.parse_args()
-    bkheatmap(args.table, scale=args.scale,
+    prefix = os.path.splitext(os.path.basename(args.table))[0]
+    df = pd.read_table(args.table, index_col=0)
+    bkheatmap(df, prefix=prefix, scale=args.scale,
               metric=args.metric, method=args.method,
               width=args.width, height=args.height,
               palette=args.palette)
