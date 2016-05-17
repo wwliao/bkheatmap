@@ -14,7 +14,7 @@ Installation
 Usage
 -----
 
-Use in Python script as a module
+Use as a module in the Python script
 
 .. code-block:: python
 
@@ -28,7 +28,7 @@ Use in Python script as a module
    df = pd.read_table(infile, index_col=0)
    bkheatmap(df, prefix=prefix)
 
-Use in shell as a command
+Use as a command in the shell
 
 .. code-block:: bash
 
