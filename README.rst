@@ -1,8 +1,14 @@
-A Bokeh heatmap for Python
-==========================
+.. image:: https://img.shields.io/badge/python-2.7-blue.svg
 
-bkheatmap is a Python module based on Bokeh package to let you plot the 
-interactive heat maps much easier!
+.. image:: https://img.shields.io/badge/license-GPLv3-green.svg
+
+Interactive heatmap for Python
+==============================
+
+bkheatmap is a Python module based on Bokeh_ to let you plot the 
+interactive heatmaps much easier!
+
+.. _Bokeh: http://bokeh.pydata.org/
 
 Installation
 ------------
@@ -23,7 +29,7 @@ Use as a module in the Python script
    from bkheatmap import bkheatmap
 
    infile = "table.txt"
-   prefix = os.path.splitext(os.path.basename(infile))
+   prefix = os.path.splitext(infile)
 
    df = pd.read_table(infile, index_col=0)
    bkheatmap(df, prefix=prefix)
