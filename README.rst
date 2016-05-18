@@ -2,7 +2,7 @@
 
 .. image:: https://img.shields.io/badge/license-GPLv3-green.svg
 
-Interactive heatmap for Python
+Interactive Heatmap for Python
 ==============================
 
 bkheatmap is a Python module based on Bokeh_ to let you plot the 
