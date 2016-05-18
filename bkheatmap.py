@@ -11,7 +11,7 @@ import pandas as pd
 import scipy.spatial.distance as dist
 import scipy.cluster.hierarchy as hier
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 
 def get_parser():
     parser = argparse.ArgumentParser()
