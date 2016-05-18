@@ -29,7 +29,7 @@ Use as a module in the Python script
    from bkheatmap import bkheatmap
 
    infile = "table.txt"
-   prefix = os.path.splitext(infile)
+   prefix = os.path.splitext(infile)[0]
 
    df = pd.read_table(infile, index_col=0)
    bkheatmap(df, prefix=prefix)
