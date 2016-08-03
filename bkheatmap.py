@@ -33,10 +33,10 @@ def get_parser():
 def calc_zscore(df, scale):
     if scale == "row":
         df = df.T
-        df = (df - df.mean()) / df.std(ddof=0)
+        df = (df - df.mean()) / df.std(ddof=1)
         df = df.T
     elif scale == "column":
-        df = (df - df.mean()) / df.std(ddof=0)
+        df = (df - df.mean()) / df.std(ddof=1)
     return df
 
 def cluster(df, metric="euclidean", method="single", row=True, column=True):
