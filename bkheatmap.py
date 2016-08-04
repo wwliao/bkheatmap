@@ -77,7 +77,7 @@ def get_colorbar_source(df, value_var, colormap):
     color = []
     for v in value:
         color.append(mpl.colors.rgb2hex(cm.get_cmap(colormap)(norm(v))))
-    return ColumnDataSource(data=dict(value=value, color=color))
+    return vmax*2/49.0, ColumnDataSource(data=dict(value=value, color=color))
 
 def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
               width=400, height=400, palette="Spectral_r"):
@@ -101,12 +101,12 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
     heatmap = figure(x_range=(-0.5, max(coldict.values()) + 0.5),
                      y_range=(-0.5, max(rowdict.values()) + 0.5),
                      plot_width=width, plot_height=height,
-                     toolbar_location="above", tools=TOOLS, logo=None,
+                     toolbar_location="above", tools=TOOLS,
                      min_border_left=0, min_border_right=0,
                      min_border_top=0, min_border_bottom=0)
-
+    #heatmap.toolbar.logo = None
     heatmap.grid.grid_line_color = None
-    heatmap.axis.visible = None
+    heatmap.axis.visible = False
     heatmap.outline_line_color = None
 
     heatmap.rect("column_id", "row_id", 1, 1, source=source,
@@ -135,12 +135,13 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
                      min_border_left=0, min_border_right=0,
                      min_border_top=0, min_border_bottom=0,
                      toolbar_location=None, webgl=True)
+    #rowlabel.toolbar.logo = None
     rowlabel.text(0.05, "row_id", "row_name",
                  source=ColumnDataSource(data=dict(row_name=row_name,
                                                    row_id=row_id)),
                  text_align="left", text_baseline="middle",
-                 text_font_size="5pt", text_color="#a8a8a8")
-    rowlabel.axis.visible = None
+                 text_font_size="10pt", text_color="#000000")
+    rowlabel.axis.visible = False
     rowlabel.grid.grid_line_color = None
     rowlabel.outline_line_color = None
 
@@ -160,13 +161,14 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
                      min_border_left=0, min_border_right=0,
                      min_border_top=0, min_border_bottom=0,
                      toolbar_location=None, webgl=True)
+    #collabel.toolbar.logo = None
     collabel.text("column_id", -0.05, "column_name",
                  source=ColumnDataSource(data=dict(column_name=column_name,
                                                    column_id=column_id)),
                  text_align="right", text_baseline="middle",
-                 text_font_size="5pt", text_color="#a8a8a8",
+                 text_font_size="10pt", text_color="#000000",
                  angle=math.pi/3)
-    collabel.axis.visible = None
+    collabel.axis.visible = False
     collabel.grid.grid_line_color = None
     collabel.outline_line_color = None
 
@@ -176,12 +178,13 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
                      min_border_left=0, min_border_right=0,
                      min_border_top=0, min_border_bottom=0,
                      toolbar_location=None, webgl=True)
+    #coldendro.toolbar.logo = None
 
     col_height = 0.09 * (df.shape[0] * width) / (df.shape[1] * height)
     if column_group:
         coldendro.multi_line(list(np.asarray(col_dendro["icoord"])/10 - 0.5),
                            list(np.asarray(col_dendro["dcoord"]) + col_height/2),
-                           line_color="#a8a8a8", line_width=1)
+                           line_color="#000000", line_width=1)
 
         groupdict = {}
         groupdict["column_id"] = column_id
@@ -194,9 +197,9 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
     else:
         coldendro.multi_line(list(np.asarray(col_dendro["icoord"])/10 - 0.5),
                            list(np.asarray(col_dendro["dcoord"])),
-                           line_color="#a8a8a8", line_width=1)
+                           line_color="#000000", line_width=1)
 
-    coldendro.axis.visible = None
+    coldendro.axis.visible = False
     coldendro.grid.grid_line_color = None
     coldendro.outline_line_color = None
 
@@ -206,11 +209,12 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
                      min_border_left=0, min_border_right=0,
                      min_border_top=0, min_border_bottom=0,
                      toolbar_location=None, webgl=True)
+    #rowdendro.toolbar.logo = None
 
     if row_group:
         rowdendro.multi_line(list(np.asarray(row_dendro["dcoord"])*-1 - 0.15),
                            list(np.asarray(row_dendro["icoord"])/10 - 0.5),
-                           line_color="#a8a8a8", line_width=1)
+                           line_color="#000000", line_width=1)
 
         groupdict = {}
         groupdict["row_id"] = row_id
@@ -223,36 +227,40 @@ def bkheatmap(df, prefix, scale="row", metric="euclidean", method="single",
     else:
         rowdendro.multi_line(list(np.asarray(row_dendro["dcoord"])*-1),
                            list(np.asarray(row_dendro["icoord"])/10 - 0.5),
-                           line_color="#a8a8a8", line_width=1)
+                           line_color="#000000", line_width=1)
 
-    rowdendro.axis.visible = None
+    rowdendro.axis.visible = False
     rowdendro.grid.grid_line_color = None
     rowdendro.outline_line_color = None
 
     empty = figure(plot_width=rowdendro.plot_width,
                         plot_height=coldendro.plot_height, title=None,
                         toolbar_location=None)
+    #empty.toolbar.logo = None
     # Plot a circle to escape NO_DATA_RENDERERS error
     empty.circle(x=0, y=0, color=None)
-    empty.axis.visible = None
+    empty.axis.visible = False
     empty.grid.grid_line_color = None
     empty.outline_line_color = None
 
     colorbar = figure(y_range=(-0.5, 0.5), x_axis_location="above",
                            plot_width=rowdendro.plot_width,
                            plot_height=coldendro.plot_height, title=None,
-                           min_border_top=70, min_border_bottom=70,
+                           min_border_top=0, min_border_bottom=0,
+                           min_border_left=0, min_border_right=0,
                            toolbar_location=None)
+    #colorbar.toolbar.logo = None
+    width, colorbar_source = get_colorbar_source(tidy_df, "zscore", palette)
     colorbar.rect(x="value", y=0, fill_color="color",
-                       line_color=None, width=1, height=1,
-                       source=get_colorbar_source(tidy_df, "zscore", palette))
+                       line_color=None, width=width, height=1,
+                       source=colorbar_source)
     colorbar.axis.axis_line_color = None
     colorbar.axis.major_tick_in = 0
     colorbar.xaxis.axis_label = "z-score"
-    colorbar.xaxis.axis_label_text_color = "#a8a8a8"
+    colorbar.xaxis.axis_label_text_color = "#000000"
     colorbar.xaxis.axis_label_text_font_size = "12pt"
-    colorbar.xaxis.major_label_text_color = "#a8a8a8"
-    colorbar.xaxis.major_tick_line_color = "#a8a8a8"
+    colorbar.xaxis.major_label_text_color = "#000000"
+    colorbar.xaxis.major_tick_line_color = "#000000"
     colorbar.yaxis.major_tick_line_color = None
     colorbar.yaxis.major_label_text_color = None
     colorbar.axis.minor_tick_line_color = None
