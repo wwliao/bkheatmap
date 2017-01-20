@@ -20,6 +20,10 @@ Installation
 Usage
 -----
 
+Please download mtcars.txt_ first, and then run bkheatmap as follows:
+
+.. _mtcars.txt: https://gist.githubusercontent.com/wwliao/9ee916c1c0295b2f570e239bc91581b3/raw/a961160be56810cb0a461d86d3a04012a89a713f/mtcars.txt
+
 Use as a module in the Python script
 
 .. code-block:: python
@@ -28,15 +32,15 @@ Use as a module in the Python script
    import pandas as pd
    from bkheatmap import bkheatmap
 
-   infile = "table.txt"
+   infile = "mtcars.txt"
    prefix = os.path.splitext(infile)[0]
 
    df = pd.read_table(infile, index_col=0)
-   bkheatmap(df, prefix=prefix)
+   bkheatmap(df, prefix=prefix, scale="column")
 
 Use as a command in the shell
 
 .. code-block:: bash
 
-   $ bkheatmap table.txt
+   $ bkheatmap --scale column mtcars.txt
 
