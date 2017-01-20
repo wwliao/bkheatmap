@@ -44,7 +44,7 @@ Or use as a command in the shell
 
    $ bkheatmap --scale column mtcars.txt
 
-Then a HTML file will be generated like this_.
+Then an HTML file will be generated like this_.
 
 .. _this: http://wwliao.name/downloads/mtcars.bkheatmap.html
 
